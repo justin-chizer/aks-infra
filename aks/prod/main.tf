@@ -1,0 +1,48 @@
+module "kubernetes" {
+  source                                = ""
+  resource_group_name                   = ""
+  agent_subnet                          = var.agent_subnet["prod1"]
+  agent_virtual_network_name            = var.agent_virtual_network_name["prod1"]
+  vnet_resource_group                   = var.vnet_resource_group["prod1"]
+  user_assigned_identity_name           = "prod-identity"
+  user_assigned_identity_resource_group = "prod-identity"
+  cluster_name                          = "prod-westus2-cluster"
+  dns_prefix                            = "prod-westus2-cluster-dns"
+  kubernetes_version                    = "1.19.11"
+  sku_tier                              = "Paid"
+  default_node_pool_vm_size             = "Standard_D16as_v4"
+  default_node_pool_enable_auto_scaling = true
+  default_node_pool_max_count           = 12
+  default_node_pool_min_count           = 6
+  default_node_pool_os_disk_size_gb     = 256
+  pod_cidr                              = var.pod_cidr
+  service_cidr                          = var.service_cidr
+  dns_service_ip                        = var.dns_service_ip
+  env                                   = var.env["prod1"]
+  subscription_id                       = var.subscription_id
+}
+
+module "kubernetes2" {
+  source                                = ""
+  depends_on                            = [module.kubernetes]
+  resource_group_name                   = ""
+  agent_subnet                          = var.agent_subnet["prod2"]
+  agent_virtual_network_name            = var.agent_virtual_network_name["prod2"]
+  vnet_resource_group                   = var.vnet_resource_group["prod2"]
+  user_assigned_identity_name           = "prod-identity"
+  user_assigned_identity_resource_group = "prod-identity"
+  cluster_name                          = "prod-westeurope-cluster"
+  dns_prefix                            = "prod-westeurope-cluster-dns"
+  kubernetes_version                    = "1.19.11"
+  sku_tier                              = "Paid"
+  default_node_pool_vm_size             = "Standard_D16as_v4"
+  default_node_pool_enable_auto_scaling = true
+  default_node_pool_max_count           = 12
+  default_node_pool_min_count           = 6
+  default_node_pool_os_disk_size_gb     = 256
+  pod_cidr                              = var.pod_cidr
+  service_cidr                          = var.service_cidr
+  dns_service_ip                        = var.dns_service_ip
+  env                                   = var.env["prod2"]
+  subscription_id                       = var.subscription_id
+}
