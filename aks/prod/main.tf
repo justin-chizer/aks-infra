@@ -1,6 +1,6 @@
 module "kubernetes" {
-  source                                = ""
-  resource_group_name                   = ""
+  source                                = "../../modules/azure_aks"
+  resource_group_name                   = "group"
   agent_subnet                          = var.agent_subnet["prod1"]
   agent_virtual_network_name            = var.agent_virtual_network_name["prod1"]
   vnet_resource_group                   = var.vnet_resource_group["prod1"]
@@ -8,7 +8,7 @@ module "kubernetes" {
   user_assigned_identity_resource_group = "prod-identity"
   cluster_name                          = "prod-westus2-cluster"
   dns_prefix                            = "prod-westus2-cluster-dns"
-  kubernetes_version                    = "1.19.11"
+  kubernetes_version                    = "1.21.7"
   sku_tier                              = "Paid"
   default_node_pool_vm_size             = "Standard_D16as_v4"
   default_node_pool_enable_auto_scaling = true
@@ -23,9 +23,9 @@ module "kubernetes" {
 }
 
 module "kubernetes2" {
-  source                                = ""
+  source                                = "../../modules/azure_aks"
   depends_on                            = [module.kubernetes]
-  resource_group_name                   = ""
+  resource_group_name                   = "group"
   agent_subnet                          = var.agent_subnet["prod2"]
   agent_virtual_network_name            = var.agent_virtual_network_name["prod2"]
   vnet_resource_group                   = var.vnet_resource_group["prod2"]
@@ -33,7 +33,7 @@ module "kubernetes2" {
   user_assigned_identity_resource_group = "prod-identity"
   cluster_name                          = "prod-westeurope-cluster"
   dns_prefix                            = "prod-westeurope-cluster-dns"
-  kubernetes_version                    = "1.19.11"
+  kubernetes_version                    = "1.21.7"
   sku_tier                              = "Paid"
   default_node_pool_vm_size             = "Standard_D16as_v4"
   default_node_pool_enable_auto_scaling = true
